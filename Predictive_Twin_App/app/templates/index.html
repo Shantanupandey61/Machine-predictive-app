@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Predictive Maintenance Digital Twin</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.4.0/dist/chartjs-plugin-annotation.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <header class="page-header">
+      <h1>Predictive Maintenance Digital Twin</h1>
+      <p class="subtitle">Monitor machine health, alerts, trends, and maintenance risk.</p>
+    </header>
+
+    <section class="card">
+      <h2>Create Machine</h2>
+      <form id="machineForm">
+        <input type="text" id="name" placeholder="Machine Name" required />
+        <input type="text" id="machine_type" placeholder="Machine Type" required />
+        <input type="text" id="location" placeholder="Location" />
+        <button type="submit">Create Machine</button>
+      </form>
+      <p id="machineResult" class="form-message"></p>
+    </section>
+
+    <section class="card">
+      <h2>Select Machine</h2>
+      <select id="machineSelect" aria-label="Select machine">
+        <option value="">Choose a machine</option>
+      </select>
+      <div class="button-row">
+        <button id="refreshNowBtn" type="button">Refresh Now</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Add Sensor Reading</h2>
+      <form id="sensorForm">
+        <input type="number" step="0.1" id="temperature" placeholder="Temperature" required />
+        <input type="number" step="0.1" id="vibration" placeholder="Vibration" required />
+        <input type="number" step="0.1" id="pressure" placeholder="Pressure" required />
+        <input type="number" step="0.1" id="rpm" placeholder="RPM" required />
+        <input type="number" step="0.1" id="runtime_hours" placeholder="Runtime Hours" required />
+        <button type="submit">Submit Reading</button>
+      </form>
+      <p id="sensorResult" class="form-message"></p>
+    </section>
+
+    <section class="grid">
+      <div class="status-card">
+        <h3>Total Readings</h3>
+        <p id="kpiReadings">--</p>
+      </div>
+      <div class="status-card">
+        <h3>Total Alerts</h3>
+        <p id="kpiAlerts">--</p>
+      </div>
+      <div class="status-card">
+        <h3>Average Health</h3>
+        <p id="kpiAvgHealth">--</p>
+      </div>
+      <div class="status-card">
+        <h3>High Risk Count</h3>
+        <p id="kpiHighRisk">--</p>
+      </div>
+      <div class="status-card">
+        <h3>Estimated MTBF</h3>
+        <p id="kpiMtbf">--</p>
+      </div>
+      <div class="status-card">
+        <h3>Estimated MTTR</h3>
+        <p id="kpiMttr">--</p>
+      </div>
+    </section>
+
+    <section class="grid">
+      <div class="status-card">
+        <h3>Health Score</h3>
+        <p id="healthScore">--</p>
+      </div>
+      <div class="status-card">
+        <h3>Health Status</h3>
+        <p id="healthBadge" class="badge neutral">--</p>
+      </div>
+      <div class="status-card">
+        <h3>Anomaly Status</h3>
+        <p id="anomalyStatus">--</p>
+      </div>
+      <div class="status-card">
+        <h3>Failure Risk</h3>
+        <p id="failureRisk">--</p>
+      </div>
+      <div class="status-card full-width">
+        <h3>Recommended Action</h3>
+        <p id="recommendedAction">--</p>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Recent Alerts</h2>
+      <div id="alertsList">
+        <p>No alerts yet.</p>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Exports</h2>
+      <div class="button-row">
+        <button id="exportHistoryBtn" type="button">Download History CSV</button>
+        <button id="exportAlertsBtn" type="button">Download Alerts CSV</button>
+      </div>
+    </section>
+
+    <section class="card chart-card">
+      <div class="chart-header">
+        <h2>Sensor History</h2>
+        <button id="loadHistoryBtn" type="button">Load History</button>
+      </div>
+      <div class="chart-wrap">
+        <canvas
+          id="historyChart"
+          aria-label="Machine sensor history chart for temperature, vibration, and pressure"
+          role="img"
+        >
+          Sensor history chart
+        </canvas>
+      </div>
+    </section>
+  </div>
+
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
