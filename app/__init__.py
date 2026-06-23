@@ -1,5 +1,5 @@
 import os
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template
 from flask_cors import CORS
 from werkzeug.exceptions import HTTPException
 from config import Config
@@ -16,6 +16,10 @@ def create_app():
 
     from .routes import api
     app.register_blueprint(api, url_prefix="/api")
+
+    @app.route("/")
+    def index():
+        return render_template("index.html")
 
     @app.errorhandler(HTTPException)
     def handle_http_error(e):
