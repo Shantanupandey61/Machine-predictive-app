@@ -76,10 +76,6 @@ def csv_response(filename, headers, rows):
         headers={"Content-Disposition": f"attachment; filename={filename}"}
     )
 
-@api.route("/", methods=["GET"])
-def home():
-    return render_template("index.html")
-
 @api.route("/health", methods=["GET"])
 def health():
     return success_response({"server": "running"})
